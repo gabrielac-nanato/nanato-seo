@@ -1,0 +1,48 @@
+name: Notion Branch Sweep
+
+# Flips branches with no commits in the last 14 days to Inactive.
+#
+# GitHub cron is UTC only and does not follow daylight saving. 06:30 UTC is
+# 23:30 in Tijuana during PDT and 22:30 during PST — before midnight either way.
+# GitHub may delay scheduled runs by a few minutes under load.
+
+on:
+  schedule:
+    - cron: '30 6 * * *'
+  workflow_dispatch:
+    inputs:
+      inactive_after_days:
+        description: 'Days without commits before a branch is marked inactive'
+        required: false
+        default: '14'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notion-sweep
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    name: Mark stale branches inactive
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sweep stale branches
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_BRANCHES_DB: ${{ vars.NOTION_BRANCHES_DB }}
+          NOTION_ACTIVITY_DB: ${{ vars.NOTION_ACTIVITY_DB }}
+          INACTIVE_AFTER_DAYS: ${{ github.event.inputs.inactive_after_days || '14' }}
+        run: node .github/scripts/notion-sweep.mjs

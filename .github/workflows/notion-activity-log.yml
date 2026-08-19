@@ -1,0 +1,56 @@
+name: Notion Activity Log
+
+# Logs branch, commit, and pull request activity into Notion.
+#
+# IMPORTANT: `create` and `delete` events only ever run the copy of this file
+# that exists on the default branch. Keep this workflow on main.
+
+on:
+  create:
+  delete:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - ready_for_review
+      - synchronize
+      - edited
+      - closed
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Serialise writes per branch so Commit Count never races with itself.
+concurrency:
+  group: notion-log-${{ github.event.ref || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  log:
+    name: Write to Notion
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Log activity to Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_BRANCHES_DB: ${{ vars.NOTION_BRANCHES_DB }}
+          NOTION_ACTIVITY_DB: ${{ vars.NOTION_ACTIVITY_DB }}
+        run: node .github/scripts/notion-log.mjs
