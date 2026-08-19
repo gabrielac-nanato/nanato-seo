@@ -17,12 +17,12 @@
 - Treat this as a schema architecture/code project, not a content-writing task.
 - Do not silently resolve OPEN gaps listed in [CLAUDE.md](CLAUDE.md); surface tradeoffs first.
 - Before implementing Layer 1/2/3 ACF field groups, review ACF Pro 6.8 native JSON-LD/schema capabilities (per [.claude/rules/acf-field-model.md](.claude/rules/acf-field-model.md)).
-- Keep all schema output filterable via `nanato_schemas_*` WordPress hooks.
+- Keep all schema output filterable via `nanato_seo_*` WordPress hooks.
 
 ## Coding Conventions
 - Project conventions are defined in [.docs/CODE_STANDARDS.md](.docs/CODE_STANDARDS.md).
 - PHP-specific rules are defined in [.claude/rules/php-conventions.md](.claude/rules/php-conventions.md).
-- Autoloading is PSR-4: `Nanato_Schemas\\` -> `classes/` (see [composer.json](composer.json)).
+- Autoloading is PSR-4: `Nanato_SEO\\` -> `classes/` (see [composer.json](composer.json)).
 - Build JSON-LD as PHP arrays and output via `wp_json_encode()`.
 
 ## Working Commands
@@ -39,9 +39,9 @@
 - Preserve user changes in a dirty worktree; do not revert unrelated modifications.
 
 ## Current Repo Pitfalls
-- Multiple expected entry files are currently empty placeholders: [nanato-schemas.php](nanato-schemas.php), [index.php](index.php), [uninstall.php](uninstall.php), [README.md](README.md), [phpcs.xml.dist](phpcs.xml.dist).
+- Multiple expected entry files are currently empty placeholders: [nanato-seo.php](nanato-seo.php), [index.php](index.php), [uninstall.php](uninstall.php), [README.md](README.md), [phpcs.xml.dist](phpcs.xml.dist).
 - Frontend source entry exists at [src/frontend.js](src/frontend.js) but is not included in webpack `entry` in [webpack.config.js](webpack.config.js).
-- Release config references likely mismatched paths/names (`mainFile: 'nanato-schema.php'`, `buildDir: 'dist'`) in [wp-release.config.js](wp-release.config.js) while repository currently uses `nanato-schemas.php` and `build/`.
+- Release config references likely mismatched paths/names (`mainFile: 'nanato-seo.php'`, `buildDir: 'dist'`) in [wp-release.config.js](wp-release.config.js) while repository currently uses `nanato-seo.php` and `build/`.
 
 ## Practical Guidance For New Work
 - If adding schema for a page/component:

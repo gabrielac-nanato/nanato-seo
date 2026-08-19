@@ -1,11 +1,11 @@
 {
-	"name": "gaby1/nanato-schemas",
-	"description": "A WordPress plugin that allows you to add schema.org microdata to your website using ACF fields.",
+	"name": "gaby1/nanato-seo",
+	"description": "A WordPress plugin for managing SEO tasks, including schema.org microdata, using ACF fields.",
 	"type": "wordpress-plugin",
 	"license": "MIT",
 	"autoload": {
 		"psr-4": {
-			"Nanato_Schemas\\": "classes/"
+			"Nanato_SEO\\": "classes/"
 		}
 	},
 	"authors": [

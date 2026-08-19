@@ -2,7 +2,7 @@
 /**
  * Plugin Helper Functions
  *
- * @package Nanato_Schemas
+ * @package Nanato_SEO
  */
 
 // Exit if accessed directly

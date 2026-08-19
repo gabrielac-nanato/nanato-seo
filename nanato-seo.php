@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Nanato Schemas
- * Description: A plugin for managing and outputting structured data schemas.
+ * Plugin Name: Nanato SEO
+ * Description: A plugin for managing SEO tasks, including structured data schemas.
  * Version: 1.0.0
  * Author: gabrielac-nanato
  * Author URI: https://github.com/gabrielac-nanato
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
  *
- * @package Nanato_Schemas
+ * @package Nanato_SEO
  */
 
 // Exit if accessed directly.
@@ -17,13 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin version.
-define( 'NANATO_SCHEMAS_VERSION', '1.0.0' );
+define( 'NANATO_SEO_VERSION', '1.0.0' );
 
 // Load plugin textdomain for translations.
 add_action(
 	'plugins_loaded',
 	function () {
-		load_plugin_textdomain( 'nanato-schemas', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'nanato-seo', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 );
 
@@ -43,15 +43,15 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' ) ) {
 require_once plugin_dir_path( __FILE__ ) . 'helpers/helpers.php';
 
 // Instantiate the classes.
-$nanato_schemas_classes = array(
-	\Nanato_Schemas\Plugin_Definitions::class,
-	\Nanato_Schemas\Plugin_Paths::class,
-	\Nanato_Schemas\ACF_Settings::class,
-	\Nanato_Schemas\Hooks::class,
-	\Nanato_Schemas\Admin::class,
+$nanato_seo_classes = array(
+	\Nanato_SEO\Plugin_Definitions::class,
+	\Nanato_SEO\Plugin_Paths::class,
+	\Nanato_SEO\ACF_Settings::class,
+	\Nanato_SEO\Hooks::class,
+	\Nanato_SEO\Admin::class,
 );
 
 // Instantiate each class.
-foreach ( $nanato_schemas_classes as $nanato_schemas_class ) {
-	new $nanato_schemas_class();
+foreach ( $nanato_seo_classes as $nanato_seo_class ) {
+	new $nanato_seo_class();
 }

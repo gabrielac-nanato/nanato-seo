@@ -1,6 +1,6 @@
 module.exports = {
-	pluginName: 'nanato-schema',
-	mainFile: 'nanato-schema.php',
+	pluginName: 'nanato-seo',
+	mainFile: 'nanato-seo.php',
 	buildDir: 'dist',
 	zipName: '{{name}}-{{version}}.zip',
 	excludePatterns: [

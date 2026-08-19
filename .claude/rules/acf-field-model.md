@@ -1,4 +1,4 @@
-# ACF Field Model — nanato-schemas
+# ACF Field Model — nanato-seo
 
 Maps the three schema layers (see `CLAUDE.md`) to concrete ACF Pro field-group structures. This is a first draft — no field groups are implemented yet (no `acf-json/` in this repo), and several points below are proposals, not decisions. Flagged items marked **OPEN** must not be silently resolved by implementation; surface them first.
 
@@ -6,7 +6,7 @@ Maps the three schema layers (see `CLAUDE.md`) to concrete ACF Pro field-group s
 **OPEN — build-vs-leverage split.** ACF Pro 6.8 introduced native schema.org/JSON-LD field mapping. Review it against source (see links in `CLAUDE.md`/`project-scope.md`) before writing custom field groups — native support may replace some or all of what's proposed below. Do not implement Layer 1/2/3 field groups until this is checked.
 
 ## Layer 1 — Global / Site-Level
-One ACF Options Page per client site (`acf_add_options_page`), field group `Nanato Schemas — Global Settings`.
+One ACF Options Page per client site (`acf_add_options_page`), field group `Nanato SEO — Global Settings`.
 
 - **Field type per property**: scalar schema properties (`name`, `legalName`, `url`, `telephone`, `email`, `foundingDate`, `priceRange`, `inLanguage`) → plain `text`/`url`/`email`/`date_picker` fields, one field group tab per schema.org entity (`Organization`, `WebSite`).
 - **Repeaters** for multi-value properties: `sameAs` (repeater of `url` sub-fields), `knowsAbout` (repeater of `text`), `areaServed` default (repeater of `text` or `post_object` if locations become their own CPT — see Layer 2 note).
@@ -33,7 +33,7 @@ Components are **ACF Flexible Content layouts or Blocks reused across page types
 
 ## General field-naming convention
 - ACF field names: `snake_case`, prefixed by schema property where it maps 1:1 (e.g. `schema_service_type` for `serviceType`) so the mapping from field to JSON-LD property is greppable.
-- Field group keys/names: prefix `group_nanato_schemas_...` to avoid collisions with the parent theme's own ACF field groups (`acf-theme-settings.php`, etc.) in the same install.
+- Field group keys/names: prefix `group_nanato_seo_...` to avoid collisions with the parent theme's own ACF field groups (`acf-theme-settings.php`, etc.) in the same install.
 - Sync exports land in this plugin's own `acf-json/` (create when the first field group is built) — do not hand-edit that JSON once it exists, same rule as the parent theme.
 
 ## Status

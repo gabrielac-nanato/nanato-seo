@@ -2,11 +2,11 @@
 /**
  * Admin Customizations
  *
- * @package Nanato_Schemas
+ * @package Nanato_SEO
  */
 
 // Define the namespace
-namespace Nanato_Schemas;
+namespace Nanato_SEO;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Import necessary classes
-use Nanato_Schemas\Plugin_Definitions;
-use Nanato_Schemas\Plugin_Paths;
+use Nanato_SEO\Plugin_Definitions;
+use Nanato_SEO\Plugin_Paths;
 
 /**
  * Admin Class

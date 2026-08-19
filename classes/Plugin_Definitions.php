@@ -3,11 +3,11 @@
 /**
  * Plugin Definitions
  *
- * @package Nanato_Schemas
+ * @package Nanato_SEO
  */
 
 // Define the namespace.
-namespace Nanato_Schemas;
+namespace Nanato_SEO;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,7 +25,7 @@ class Plugin_Definitions {
 	 * @return string Plugin prefix (kebab-case).
 	 */
 	public static function plugin_prefix() {
-		return 'nanato-schemas';
+		return 'nanato-seo';
 	}
 
 	// TODO: Implement additional plugin definitions if needed.

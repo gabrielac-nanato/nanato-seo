@@ -1,4 +1,4 @@
-# PHP Conventions — nanato-schemas
+# PHP Conventions — nanato-seo
 
 PHP-specific detail derived from `.docs/CODE_STANDARDS.md` §2 — that file is the authoritative team standard (also covers JS, SCSS, ACF, and build tooling); this file exists to give Claude the fuller PHP-specific rationale and examples.
 
@@ -6,7 +6,7 @@ PHP-specific detail derived from `.docs/CODE_STANDARDS.md` §2 — that file is 
 - WordPress Coding Standards (WPCS) is the primary base for all PHP code.
 - Minimum WordPress version: match the parent theme's supported version (confirm before first release).
 - Minimum PHP version: 7.4.
-- All user-facing strings must be translatable with text domain `nanato-schemas`.
+- All user-facing strings must be translatable with text domain `nanato-seo`.
 - Always escape output and sanitize input.
 - Keep files focused on a single responsibility.
 - Keep schema output deterministic and filterable.
@@ -20,19 +20,19 @@ PHP-specific detail derived from `.docs/CODE_STANDARDS.md` §2 — that file is 
 
 Ruleset and formatting:
 - Use WPCS v3.1+.
-- Use text domain `nanato-schemas`.
+- Use text domain `nanato-seo`.
 
 ## 3. Namespace
-All classes use the `Nanato_Schemas` namespace (PSR-4 mapped to `classes/` in `composer.json`).
+All classes use the `Nanato_SEO` namespace (PSR-4 mapped to `classes/` in `composer.json`).
 
 ```php
-namespace Nanato_Schemas;
+namespace Nanato_SEO;
 ```
 
 Add sub-namespaces by schema layer once needed:
 
 ```php
-namespace Nanato_Schemas\Page_Layer;
+namespace Nanato_SEO\Page_Layer;
 ```
 
 Place `use` statements after the namespace declaration.
@@ -45,10 +45,10 @@ Every PHP file starts with a file-level DocBlock and an `ABSPATH` guard:
 /**
  * Short description of the file.
  *
- * @package Nanato_Schemas
+ * @package Nanato_SEO
  */
 
-namespace Nanato_Schemas;
+namespace Nanato_SEO;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -70,7 +70,7 @@ class Organization_Schema {
     }
 
     private function register_hooks() {
-        add_filter( 'nanato_schemas_graph', array( $this, 'add_organization_node' ) );
+        add_filter( 'nanato_seo_graph', array( $this, 'add_organization_node' ) );
     }
 }
 ```
@@ -93,8 +93,8 @@ Skip DocBlocks on obvious private helpers when the signature is already clear.
 ## 7. Hooks And Filters
 - Use `add_action()` and `add_filter()` for registration.
 - Group related hook registrations with a short comment.
-- Pass every JSON-LD fragment or graph node through a matching `apply_filters( 'nanato_schemas_...', ... )` before output.
-- Prefix hooks, options, transients, and meta keys with `nanato_schemas_`.
+- Pass every JSON-LD fragment or graph node through a matching `apply_filters( 'nanato_seo_...', ... )` before output.
+- Prefix hooks, options, transients, and meta keys with `nanato_seo_`.
 
 ## 8. Indentation And Spacing
 - Use tabs for indentation.
@@ -128,8 +128,8 @@ Instantiate classes in the main plugin file from a flat class list:
 
 ```php
 $classes = [
-    \Nanato_Schemas\Organization_Schema::class,
-    \Nanato_Schemas\Breadcrumb_Schema::class,
+    \Nanato_SEO\Organization_Schema::class,
+    \Nanato_SEO\Breadcrumb_Schema::class,
 ];
 
 foreach ( $classes as $class ) {
@@ -179,10 +179,10 @@ Use nonces for any form submission or AJAX request this plugin adds (e.g. an opt
 
 ```php
 // Create
-wp_create_nonce( 'nanato_schemas_action' );
+wp_create_nonce( 'nanato_seo_action' );
 
 // Verify
-if ( ! wp_verify_nonce( $_POST['nonce'], 'nanato_schemas_action' ) ) {
+if ( ! wp_verify_nonce( $_POST['nonce'], 'nanato_seo_action' ) ) {
     wp_die( 'Security check failed.' );
 }
 ```
@@ -191,14 +191,14 @@ if ( ! wp_verify_nonce( $_POST['nonce'], 'nanato_schemas_action' ) ) {
 Validate required ACF field data before rendering schema output. If required data is missing, return early instead of outputting incomplete JSON-LD.
 
 ## 13. Internationalization
-- Use text domain `nanato-schemas`.
+- Use text domain `nanato-seo`.
 - Wrap user-facing strings with translation functions such as `__()` and `esc_html__()`.
 - Use `sprintf()` with placeholders for translatable strings instead of string concatenation.
 
 ## 14. File And Directory Structure
 ```
-nanato-schemas/
-├── classes/         # PHP classes (PSR-4 namespace Nanato_Schemas)
+nanato-seo/
+├── classes/         # PHP classes (PSR-4 namespace Nanato_SEO)
 ├── inc/             # Procedural includes/helpers
 ├── src/             # JS/SCSS source (admin, editor, frontend)
 ├── acf-json/        # ACF Local JSON (auto-generated, do not hand-edit)
@@ -207,4 +207,4 @@ nanato-schemas/
 ```
 
 - Keep business logic out of templates.
-- Put plain helper functions in `inc/helpers.php` and prefix with `nanato_schemas_`.
+- Put plain helper functions in `inc/helpers.php` and prefix with `nanato_seo_`.

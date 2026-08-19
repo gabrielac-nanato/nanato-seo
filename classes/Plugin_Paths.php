@@ -5,11 +5,11 @@
  *
  * Provides methods to retrieve plugin URL and path.
  *
- * @package Nanato_Schemas
+ * @package Nanato_SEO
  */
 
 // Define the namespace.
-namespace Nanato_Schemas;
+namespace Nanato_SEO;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,4 +1,4 @@
-# Code Standards — nanato-schemas
+# Code Standards — nanato-seo
 
 This document defines coding and documentation standards for this plugin.
 WordPress Coding Standards (WPCS) is the primary base for PHP.
@@ -28,8 +28,8 @@ WordPress Coding Standards (WPCS) is the primary base for PHP.
 - Build JSON-LD as PHP arrays and output through `wp_json_encode()`.
 
 ### 2.3 Namespace and Class Layout
-- Namespace: `Nanato_Schemas`.
-- Autoload mapping: `Nanato_Schemas\\` to `classes/`.
+- Namespace: `Nanato_SEO`.
+- Autoload mapping: `Nanato_SEO\\` to `classes/`.
 - One class per file.
 - File name matches class name (for example, `Schema_Builder` in `classes/Schema_Builder.php`).
 - Register hooks in `__construct()` or in a private `register_hooks()` called from `__construct()`.
@@ -37,7 +37,7 @@ WordPress Coding Standards (WPCS) is the primary base for PHP.
 
 ### 2.4 File Header
 Every PHP file must start with:
-- File-level DocBlock with `@package Nanato_Schemas`
+- File-level DocBlock with `@package Nanato_SEO`
 - `ABSPATH` guard
 
 ### 2.5 DocBlocks
@@ -46,8 +46,8 @@ Every PHP file must start with:
 
 ### 2.6 Hooks and Prefixes
 - Register hooks with `add_action()` and `add_filter()`.
-- Prefix plugin hooks, options, transients, and meta keys with `nanato_schemas_`.
-- Pass JSON-LD fragments and graph nodes through `apply_filters( 'nanato_schemas_...', ... )` before output.
+- Prefix plugin hooks, options, transients, and meta keys with `nanato_seo_`.
+- Pass JSON-LD fragments and graph nodes through `apply_filters( 'nanato_seo_...', ... )` before output.
 
 ## 3. JavaScript Standards
 
@@ -102,7 +102,7 @@ Every PHP file must start with:
 | HTML content | `wp_kses_post()` |
 
 ## 6. Internationalization
-- Text domain: `nanato-schemas`.
+- Text domain: `nanato-seo`.
 - Wrap user-facing strings in translation functions such as `__()` and `esc_html__()`.
 - Use `sprintf()` placeholders for translatable strings instead of string concatenation.
 
@@ -115,8 +115,8 @@ Every PHP file must start with:
 
 ## 8. File and Directory Structure
 ```
-nanato-schemas/
-├── classes/     # PHP classes (PSR-4 namespace Nanato_Schemas)
+nanato-seo/
+├── classes/     # PHP classes (PSR-4 namespace Nanato_SEO)
 ├── inc/         # Procedural includes and helpers
 ├── src/         # JS and SCSS source
 ├── acf-json/    # ACF local JSON (generated)
@@ -125,7 +125,7 @@ nanato-schemas/
 ```
 
 - Keep business logic out of templates.
-- Put plain helper functions in `inc/helpers.php` and prefix with `nanato_schemas_`.
+- Put plain helper functions in `inc/helpers.php` and prefix with `nanato_seo_`.
 
 ## 9. Build and Lint Commands
 - `npm run wp:start`

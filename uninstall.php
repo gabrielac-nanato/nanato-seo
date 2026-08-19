@@ -2,11 +2,11 @@
 /**
  * Fired when the plugin is uninstalled.
  *
- * @package Nanato_Schemas
+ * @package Nanato_SEO
  */
 
 // Define the namespace.
-namespace Nanato_Schemas;
+namespace Nanato_SEO;
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;

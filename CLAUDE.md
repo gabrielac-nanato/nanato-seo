@@ -1,4 +1,4 @@
-# nanato-schemas — Project Memory
+# nanato-seo — Project Memory
 
 ## What This Is
 A WordPress plugin that generates JSON-LD (schema.org) markup for legal services websites.
