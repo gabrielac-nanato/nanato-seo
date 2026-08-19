@@ -1,11 +1,17 @@
 # nanato-seo — Project Memory
 
 ## What This Is
-A WordPress plugin that generates JSON-LD (schema.org) markup for legal services websites.
+A WordPress plugin that centralizes SEO functionality for legal services websites — structured
+data (JSON-LD/schema.org) plus non-schema SEO controls such as archive-page noindexing.
 Serves multiple law firm clients — similar page structure, variable content, optional features per client.
 
-**This is a structured-data architecture project, not a content project.**
-Stay focused on schema.org types, properties, and JSON-LD architecture.
+Originally scoped to schema.org/JSON-LD only (see the three-layer architecture below); broadened
+to a general SEO plugin so features like `Noindex_Archive` (folded in from the standalone
+`nanato-noindex-archive-pages` plugin) have a home without spinning up a new plugin per feature.
+
+**This is a technical-SEO/structured-data architecture project, not a content project.**
+Stay focused on schema.org types/properties, JSON-LD architecture, and similar technical SEO
+controls (meta robots, indexing rules, etc.) — not copywriting or content production.
 If a task drifts toward content generation, flag the distinction first.
 
 ## Goals

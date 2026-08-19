@@ -37,6 +37,7 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' ) ) {
 	require_once plugin_dir_path( __FILE__ ) . 'classes/ACF_Settings.php';
 	require_once plugin_dir_path( __FILE__ ) . 'classes/Hooks.php';
 	require_once plugin_dir_path( __FILE__ ) . 'classes/Admin.php';
+	require_once plugin_dir_path( __FILE__ ) . 'classes/Noindex_Archive.php';
 }
 
 // Include helper functions.
@@ -49,6 +50,7 @@ $nanato_seo_classes = array(
 	\Nanato_SEO\ACF_Settings::class,
 	\Nanato_SEO\Hooks::class,
 	\Nanato_SEO\Admin::class,
+	\Nanato_SEO\Noindex_Archive::class,
 );
 
 // Instantiate each class.
