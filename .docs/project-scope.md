@@ -16,9 +16,12 @@ This project defines the structured-data (schema.org / JSON-LD) foundation for a
 
 Consult these directly when technical specifics are needed — verify against source rather than assuming, since these are fast-moving/recent tools:
 
+* ACF automatic structured data overview: [https://www.advancedcustomfields.com/resources/automatic-structured-data-with-schema-org/](https://www.advancedcustomfields.com/resources/automatic-structured-data-with-schema-org/)
+* ACF Schema.org property mapping: [https://www.advancedcustomfields.com/resources/schema-org-property-mapping/](https://www.advancedcustomfields.com/resources/schema-org-property-mapping/)
+* ACF structured data for blocks: [https://www.advancedcustomfields.com/resources/structured-data-for-acf-blocks/](https://www.advancedcustomfields.com/resources/structured-data-for-acf-blocks/)
 * ACF machine-readable content: [https://www.advancedcustomfields.com/resources/acf-machine-readable-content/](https://www.advancedcustomfields.com/resources/acf-machine-readable-content/)
-* ACF Pro 6.8 beta — schema.org/JSON-LD testing guide: [https://www.advancedcustomfields.com/resources/acf-pro-6-8-beta-2-schema-org-json-ld-testing-guide/](https://www.advancedcustomfields.com/resources/acf-pro-6-8-beta-2-schema-org-json-ld-testing-guide/)
-* ACF — automatic structured data with schema.org: [https://www.advancedcustomfields.com/resources/automatic-structured-data-with-schema-org/](https://www.advancedcustomfields.com/resources/automatic-structured-data-with-schema-org/)
+* ACF Schema.org JSON-LD testing guide: [https://www.advancedcustomfields.com/resources/acf-pro-6-8-beta-2-schema-org-json-ld-testing-guide/](https://www.advancedcustomfields.com/resources/acf-pro-6-8-beta-2-schema-org-json-ld-testing-guide/)
+* ACF schema output format choices: [https://www.advancedcustomfields.com/resources/acf-schema-output_format_choices/](https://www.advancedcustomfields.com/resources/acf-schema-output_format_choices/)
 * WordPress AI plugin (plugin directory): [https://wordpress.org/plugins/ai/](https://wordpress.org/plugins/ai/)
 * WordPress AI feature plugin (GitHub): [https://github.com/WordPress/ai/blob/develop/README.md](https://github.com/WordPress/ai/blob/develop/README.md)
 * AI Provider for Anthropic (WordPress plugin): [https://wordpress.org/plugins/ai-provider-for-anthropic/](https://wordpress.org/plugins/ai-provider-for-anthropic/)

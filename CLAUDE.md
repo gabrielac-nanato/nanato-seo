@@ -89,21 +89,71 @@ Schema type and @id pattern **never vary by role/category** — `jobTitle` handl
 ## Open Gaps — Do Not Silently Resolve
 Flag these before implementing. Do not pick a default without surfacing the tradeoff:
 
-1. **Case results/verdicts** — No dedicated schema.org type. Options: omit structured data (rely on well-marked-up content), or approximate with `ItemList` + `MonetaryAmount` (imperfect fit). Decision required.
+1. **Case results/verdicts** — No dedicated schema.org type. `nanato-seo` will not model these as JSON-LD. Case-result structured markup will be handled through HTML `itemprop` attributes in theme code because case results are not a custom post type.
 
-2. **Conditional templates** — Sub-service pages and FAQ (page and section) are NOT present on every client. Build per-client flags for active/inactive templates — do not assume a fixed template set.
+2. **Conditional templates** — Sub-service pages and FAQ (page and section) are NOT present on every client. FAQ support is planned, with per-client/page inclusion controls still required; do not assume a fixed template set.
 
-3. **Multi-location entity structure** — How each location relates to the parent org (`subOrganization`? separate `LocalBusiness`?) is undecided. Do not implement until resolved.
+3. **ACF-to-schema field mapping** — ACF Pro 6.8.8 is installed and current. The native schema.org/JSON-LD capability still needs to be verified against the official implementation documentation before custom Layer 1/2/3 field groups and renderers are expanded.
 
-4. **ACF-to-schema field mapping** — How ACF field structures (repeaters, groups, relationship fields) map to the three-layer model is undefined. Review ACF Pro 6.8 native schema.org/JSON-LD features before building — may change build-vs-leverage split significantly.
+4. **Combo page differentiation** — Service + Location combo pages must be structured to avoid reading as near-duplicates of the plain service or plain location page. Partially unblocked by the multi-location decision below (see Resolved Decisions) — combo pages get a `primary_location` field to resolve `provider` to a specific location's `@id`, but the actual `areaServed` output shape per combo page is still open.
 
-5. **Combo page differentiation** — Service + Location combo pages must be structured to avoid reading as near-duplicates of the plain service or plain location page.
+5. **omni-schema-panel migration decisions** — `nanato-seo` will fully replace the legacy `omni-schema-panel` plugin (inherited from a prior agency on Ceja). Structured-data functionality is in scope; the visible author chip is an optional feature, not a required part of the first migration. See `.docs/omni-migration-mapping.md` for the remaining field-level questions, including Reviews and the `datePublished`/`dateModified` behavior.
+
+## Resolved Decisions
+
+### Multi-location entity structure (was Open Gap #3)
+Decided after checking real client sitemaps/contact pages (Ceja: 2 offices — Pasadena, Houston —
+on one shared directions page; Whitley Law Firm (`abogadoswhitley.com`): 7-8 offices — Raleigh,
+Kinston, New Bern, Charlotte, Jacksonville, Greenville, Winston-Salem, Durham — all on one shared
+Contact page, each just linking out to a Google Maps pin). No current client has dedicated
+per-location pages, which rules out a page-owned-entity-per-location model as the default.
+
+- **Layer 1 (global options page): a `locations` repeater**, unbounded rows — must scale from 2
+  to 8+ without any hardcoded count. Sub-fields per row: `location_name`, `phone`, `email`,
+  `address` (street/city/state/postal_code/country group), `geo` (lat/long group), `map_url`,
+  `areas_served` (repeater of text — feeds the combo-page differentiation gap above). Also an
+  *optional* `location_page` post_object field — empty for every current client, but present so a
+  future client who does build dedicated location pages isn't a special case.
+- **A `contact_page` field** on Layer 1 pointing at whichever page is the client's shared
+  contact/directions page (`/contacto/`, `/directions/`, `/como-llegar/` all vary by client) —
+  falls back to `home_url()` if unset.
+- **`@id` is computed at render time, never stored:**
+  - If a row's `location_page` is set → `{permalink}#legalservice` (page-owned pattern, for the
+    future dedicated-page case).
+  - Otherwise → `{contact_page URL}#location-{sanitize_title(location_name)}`.
+- **Relationship:** each location's `LegalService` node carries
+  `"branchOf": {"@id": "{home_url}/#organization"}`. The global `Organization` node does **not**
+  enumerate `subOrganization` back — one-directional `branchOf` matches schema.org's own
+  multi-location examples and avoids a second place that has to stay in sync with the repeater.
+- **Combo pages** get a `primary_location` field (references one repeater row) so `provider`
+  resolves to that specific location's `@id` instead of the generic org `@id`.
+
+### Implementation scope decisions
+
+- **Environment:** WordPress 7.0.4 and ACF Pro 6.8.8 on the local installation at
+  `ceja-law-firm.test`. The current milestone does not depend on theme templates or custom
+  post types.
+- **Implementation order:** global Organization/WebSite schema first, then multi-location
+  `LegalService` nodes, followed by page-specific schema.
+- **Opening hours:** retain support as an optional global setting. Most client sites will leave
+  it unused; do not require hours data for schema output.
+- **FAQ:** include FAQ schema support for both FAQ pages and reusable FAQ sections, with
+  conditional inclusion controls for clients that do not use them.
+- **Reviews:** defer Reviews/AggregateRating until the data source is explicitly selected. Do
+  not carry over the legacy uncached live-average query by default.
+- **Case results:** keep case-result markup in theme HTML using `itemprop`; do not add a
+  case-results schema builder to this plugin.
+- **Author chip:** migrate the structured author data, but treat visible author-chip rendering
+  as an optional feature that can be enabled separately.
 
 ## Key Reference Resources
 Verify from source — do not answer from memory. These are fast-moving/recent tools:
+- ACF automatic structured data overview: https://www.advancedcustomfields.com/resources/automatic-structured-data-with-schema-org/
+- ACF Schema.org property mapping: https://www.advancedcustomfields.com/resources/schema-org-property-mapping/
+- ACF structured data for blocks: https://www.advancedcustomfields.com/resources/structured-data-for-acf-blocks/
 - ACF machine-readable content: https://www.advancedcustomfields.com/resources/acf-machine-readable-content/
-- ACF Pro 6.8 beta — schema.org/JSON-LD: https://www.advancedcustomfields.com/resources/acf-pro-6-8-beta-2-schema-org-json-ld-testing-guide/
-- ACF — automatic structured data: https://www.advancedcustomfields.com/resources/automatic-structured-data-with-schema-org/
+- ACF Schema.org JSON-LD testing guide: https://www.advancedcustomfields.com/resources/acf-pro-6-8-beta-2-schema-org-json-ld-testing-guide/
+- ACF schema output format choices: https://www.advancedcustomfields.com/resources/acf-schema-output_format_choices/
 - WordPress AI plugin (directory): https://wordpress.org/plugins/ai/
 - WordPress AI feature plugin (GitHub): https://github.com/WordPress/ai/blob/develop/README.md
 - AI Provider for Anthropic: https://wordpress.org/plugins/ai-provider-for-anthropic/
@@ -115,6 +165,7 @@ Verify from source — do not answer from memory. These are fast-moving/recent t
 - `.docs/CODE_STANDARDS.md` — authoritative team coding standard (PHP, JS, SCSS, ACF, security, i18n, file structure, build/lint commands)
 - `.docs/project-scope.md` — full project scope: objectives, page-type taxonomy, three-layer architecture, extension architecture implications
 - `.docs/schema-markup-mapping.md` — detailed per-page-type schema.org property mapping, plus GEO-specific notes
+- `.docs/omni-migration-mapping.md` — field-by-field mapping from the legacy `omni-schema-panel` plugin's ACF model to `nanato-seo`'s three-layer architecture, for migrating Ceja's existing schema data
 - `.claude/rules/php-conventions.md` — PHP-specific implementation detail derived from `.docs/CODE_STANDARDS.md` §2 (namespace/class layout, hooks, security, i18n)
 - `.claude/rules/acf-field-model.md` — draft ACF Pro field-group structure per schema layer; provisional pending the ACF Pro 6.8 native JSON-LD review
 
@@ -125,11 +176,11 @@ Verify from source — do not answer from memory. These are fast-moving/recent t
 - When a claim depends on the linked ACF/WP AI resources, verify against source before answering
 
 ## Next Steps (at project start)
-- [ ] Review ACF Pro 6.8 native schema.org/JSON-LD capabilities — determine build-vs-leverage split
-- [ ] Resolve Case Results schema gap
+- [ ] Verify ACF Pro 6.8.8 native schema.org/JSON-LD capabilities — determine build-vs-leverage split
+- [x] Resolve Case Results schema gap — keep case-result `itemprop` markup in theme code
 - [ ] Finalize @graph output structure
 - [ ] Define required vs. optional properties per schema type per page type
-- [ ] Decide multi-location entity structure
-- [ ] Define how extension flags conditional/inactive templates per client
+- [x] Decide multi-location entity structure
+- [ ] Define how extension flags conditional/inactive templates per client, including FAQ
 - [ ] Define ACF field structure (repeaters/groups) per schema layer
 - [x] Define PHP file naming and ACF field naming conventions — draft in place (`.claude/rules/php-conventions.md`, `.claude/rules/acf-field-model.md`); revisit after the ACF Pro 6.8 review
